@@ -1,0 +1,16 @@
+INSERT INTO mt_field
+(field_name,field_address,field_capacity)
+VALUES
+    ('Madison Square Garden','New York City, New York','19,812 persons');
+
+INSERT INTO mt_field
+(field_name,field_address,field_capacity)
+VALUES
+    ('Staples Center','Los Angeles, California','18,997 persons');
+
+INSERT INTO mt_field
+(field_name,field_address,field_capacity)
+VALUES
+    ('Manchester Arena','United Kingdom, California','21,000');
+
+SELECT * FROM mt_field

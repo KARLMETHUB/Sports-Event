@@ -1,0 +1,22 @@
+INSERT INTO mt_team_matches
+(team_id,match_id)
+VALUES
+(2,1)
+
+INSERT INTO mt_team_matches
+(team_id,match_id)
+VALUES
+(1,1)
+
+INSERT INTO mt_team_matches
+(team_id,match_id)
+VALUES
+(3,2)
+
+INSERT INTO mt_team_matches
+(team_id,match_id)
+VALUES
+(4,2)
+
+SELECT * FROM mt_team_matches
+

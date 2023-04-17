@@ -1,0 +1,12 @@
+
+INSERT INTO mt_tournament
+(tournament_name,tournament_style,sports_category)
+VALUES
+('NBA','Play-In Tournament','Basketball');
+
+INSERT INTO mt_tournament
+(tournament_name,tournament_style,sports_category)
+VALUES
+('FIFA','Multilevel Tournament','Soccer');
+
+SELECT * FROM mt_tournament
