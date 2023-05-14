@@ -31,3 +31,6 @@ hs_err_pid*
 
 #Removes tracking for IDE Settings
 KARLREPO.iml
+
+
+security/

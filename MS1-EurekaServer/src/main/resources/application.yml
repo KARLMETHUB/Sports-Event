@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: eureka-server
+  # TODO: Remove this then run?
+  freemarker:
+    template-loader-path: classpath:/templates/
+    prefer-file-system-access: false
+  activemq:
+    broker-url:
+
+#  cloud:
+#    config:
+#      import-check:
+#        enabled:false
+
+
+server:
+  port: 8761
+
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+
+
+  instance:
+    prefer-ip-address: true
