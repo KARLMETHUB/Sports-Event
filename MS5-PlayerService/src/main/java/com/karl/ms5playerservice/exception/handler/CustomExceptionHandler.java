@@ -20,7 +20,7 @@ public class CustomExceptionHandler {
             ResourceIdShouldBeNullException.class,
             ResourceIdRequiredException.class
     })
-    public ResponseEntity<ApiResult> handleException(Exception e,
+    public ResponseEntity<ApiResult> handleExceptions(Exception e,
                                                      HttpServletRequest request) {
 
         return new ResponseEntity<>(
@@ -31,7 +31,9 @@ public class CustomExceptionHandler {
                     .status(HttpStatus.NOT_FOUND.value())
                     .timeStamp(LocalDateTime.now())
                     .build(),
-                HttpStatus.BAD_REQUEST);
+                e instanceof ResourceNotFoundException ?
+                        HttpStatus.NOT_FOUND : HttpStatus.BAD_REQUEST);
     }
+
 
 }

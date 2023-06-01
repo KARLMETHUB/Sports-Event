@@ -11,7 +11,7 @@ public class ExceptionMessage {
     public static final String PLAYER_ID_REQUIRED = "Player id must not be null. ";
     public static final String TEAM_ID_REQUIRED = "Team id must not be null. ";
     public static final String PLAYER_ALREADY_ASSIGNED = "Player is already assigned to team. ";
-    public static final String EMPTY_RESPONSE_BODY = "Response body is null. ";
+    public static final String EMPTY_RESPONSE_BODY = "Response body is null. Service must be unavailable";
 
 
 

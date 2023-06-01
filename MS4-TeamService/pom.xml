@@ -16,6 +16,15 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.coverage.exclusions>
+            src/test/java/com/karl/teams/model/entities/**/*,
+            src/main/java/com/karl/teams/TeamsApplication.*,
+            src/main/java/com/karl/teams/model/dto/**/*,
+            src/main/java/com/karl/teams/model/ApiResult/**/*,
+            src/main/java/com/karl/teams/exceptions/**/*,
+            src/main/java/com/karl/teams/config/**/*,
+            src/main/java/com/karl/teams/utils/**/*
+        </sonar.coverage.exclusions>
     </properties>
 
     <dependencies>
@@ -83,6 +92,8 @@
                     <exclude>com/karl/teams/model/dto/</exclude>
                     <exclude>com/karl/teams/model/ApiResult.class</exclude>
                     <exclude>com/karl/teams/exceptions/</exclude>
+                    <exclude>com/karl/teams/config/</exclude>
+                    <exclude>com/karl/teams/utils/</exclude>
                 </excludes>
             </configuration>
         </plugin>

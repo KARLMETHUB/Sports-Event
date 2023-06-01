@@ -1,6 +1,7 @@
 package com.karl.ms7ticketservice.utils;
 
 import com.karl.ms7ticketservice.dto.TicketDTO;
+import com.karl.ms7ticketservice.dto.match.MatchDTO;
 import com.karl.ms7ticketservice.entity.Ticket;
 
 public class TicketDtoConverter {
@@ -12,6 +13,8 @@ public class TicketDtoConverter {
                 .ticketId(t.getTicketId())
                 .price(t.getPrice())
                 .customerNane(t.getCustomerNane())
+                .matchId(t.getMatch().getMatchId())
+                .matchDTO(t.getMatch())
                 .build();
     }
 
@@ -20,6 +23,7 @@ public class TicketDtoConverter {
                 .ticketId(t.getTicketId())
                 .price(t.getPrice())
                 .customerNane(t.getCustomerNane())
+                .match(t.getMatchDTO())
                 .build();
     }
 

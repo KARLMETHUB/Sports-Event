@@ -15,6 +15,7 @@ spring:
           predicates:
             - Path=/players/**
           filters:
+            - AuthenticationFilter
             - StripPrefix=1
 
         - id: teams
@@ -22,6 +23,7 @@ spring:
           predicates:
             - Path=/teams/**
           filters:
+            - AuthenticationFilter
             - StripPrefix=1
 
         - id: fields
@@ -29,6 +31,7 @@ spring:
           predicates:
             - Path=/fields/**
           filters:
+            - AuthenticationFilter
             - StripPrefix=1
 
         - id: tickets
@@ -36,6 +39,7 @@ spring:
           predicates:
             - Path=/tickets/**
           filters:
+            - AuthenticationFilter
             - StripPrefix=1
 
         - id: tournaments
@@ -43,6 +47,7 @@ spring:
           predicates:
             - Path=/tournaments/**
           filters:
+            - AuthenticationFilter
             - StripPrefix=1
 
         - id: matches
@@ -50,6 +55,24 @@ spring:
           predicates:
             - Path=/matches/**
           filters:
+            - AuthenticationFilter
+            - StripPrefix=1
+
+        - id: auth
+          uri: lb://auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - AuthenticationFilter
+            - StripPrefix=1
+
+#        no underscore for name
+        - id: liveupdates
+          uri: lb://liveupdates
+          predicates:
+            - Path=/liveupdates/**
+          filters:
+            - AuthenticationFilter
             - StripPrefix=1
 
 
@@ -62,5 +85,5 @@ eureka:
       defaultZone: http://localhost:8761/eureka
 
 
-  instance:
+#  instance:
     prefer-ip-address: true

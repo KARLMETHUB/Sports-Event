@@ -31,6 +31,8 @@ public class CustomExceptionHandler {
                 LocalDateTime.now()
         );
 
-        return new ResponseEntity<>(apiResult,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(apiResult,
+                e instanceof ResourceNotFoundException ?
+                        HttpStatus.NOT_FOUND : HttpStatus.BAD_REQUEST);
     }
 }

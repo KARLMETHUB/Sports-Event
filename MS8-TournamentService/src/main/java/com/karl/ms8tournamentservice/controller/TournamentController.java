@@ -30,7 +30,7 @@ public class TournamentController {
         return new ResponseEntity<>(
                 tournamentService
                         .getAllTournaments().stream().map(TournamentDtoConverter::toDto)
-                        .toList(),
+                        .collect(Collectors.toList()),
                 HttpStatus.OK
         );
     }

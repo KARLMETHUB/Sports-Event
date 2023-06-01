@@ -2,19 +2,12 @@ package com.karl.teams.repository;
 
 import com.karl.teams.model.dto.TeamDTO;
 import com.karl.teams.model.entities.Team;
-import com.karl.teams.repository.TeamsRepository;
-import com.karl.teams.service.TeamService;
-import org.assertj.core.api.AssertionsForClassTypes;
+import com.karl.teams.utils.TeamDtoConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.ArrayList;
@@ -44,9 +37,7 @@ class TeamRepositoryTest {
 
         teams = teamDTOs
                 .stream()
-                .map(
-                teamDTO ->
-                    new Team(teamDTO.getTeamName()))
+                .map(TeamDtoConverter::toEntity)
                 .collect(Collectors.toList());
     }
     @Test
@@ -57,8 +48,6 @@ class TeamRepositoryTest {
         assertThat(team).isNotNull();
         assertThat(team.getTeamId()).isNotNull();
         assertThat(team.getTeamId()).isPositive();
-
-
     }
 
 

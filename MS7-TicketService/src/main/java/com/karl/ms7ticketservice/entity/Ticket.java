@@ -1,5 +1,6 @@
 package com.karl.ms7ticketservice.entity;
 
+import com.karl.ms7ticketservice.dto.match.MatchDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,4 +27,9 @@ public class Ticket {
     @Column(name = "ticket_price",nullable = false)
     private Float price;
 
+    @Column(name = "match_id",nullable = false)
+    private Integer matchId;
+
+    @Transient
+    private MatchDTO matchDTO;
 }

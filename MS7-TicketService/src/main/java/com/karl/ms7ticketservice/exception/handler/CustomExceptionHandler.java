@@ -1,10 +1,7 @@
 package com.karl.ms7ticketservice.exception.handler;
 
 import com.karl.ms7ticketservice.dto.ApiResult;
-import com.karl.ms7ticketservice.exception.ResourceNotFoundException;
-import com.karl.ms7ticketservice.exception.TicketCreateException;
-import com.karl.ms7ticketservice.exception.TicketDeleteException;
-import com.karl.ms7ticketservice.exception.TicketUpdateException;
+import com.karl.ms7ticketservice.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,6 +14,8 @@ import java.time.LocalDateTime;
 public class CustomExceptionHandler {
 
     @ExceptionHandler({
+            MissingOrNonExistentFieldException.class,
+            FeignClientUnavailableException.class,
             ResourceNotFoundException.class,
             TicketCreateException.class,
             TicketUpdateException.class,
@@ -30,7 +29,14 @@ public class CustomExceptionHandler {
                 HttpStatus.NOT_FOUND.value(),
                 LocalDateTime.now()
         );
+        HttpStatus status = HttpStatus.BAD_REQUEST;
 
-        return new ResponseEntity<>(apiResult,HttpStatus.BAD_REQUEST);
+        if (e instanceof FeignClientUnavailableException)
+            status = HttpStatus.SERVICE_UNAVAILABLE;
+
+        if (e instanceof ResourceNotFoundException)
+            status = HttpStatus.NOT_FOUND;
+
+        return new ResponseEntity<>(apiResult,status);
     }
 }

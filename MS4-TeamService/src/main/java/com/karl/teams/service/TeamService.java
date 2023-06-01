@@ -34,13 +34,13 @@ public class TeamService {
 
     public List<Team> getAllTeams() {
 
+        List<Team> teams = teamsRepository.findAll();
+
         List<PlayerDTO> players = restTemplate
                 .exchange(PLAYERS,
                         HttpMethod.GET,
                         null, new ParameterizedTypeReference<List<PlayerDTO>>() {})
                 .getBody();
-
-        List<Team> teams = teamsRepository.findAll();
 
         if (teams.isEmpty() || players == null || players.isEmpty())
             return teams;
@@ -61,7 +61,6 @@ public class TeamService {
         if (team.isEmpty())
             throw new ResourceNotFoundException(String.format(RESOURCE_NOT_FOUND,teamId));
 
-        // TODO: 5/14/2023 : Replace with feign client 
         List<PlayerDTO> players = restTemplate
                 .exchange(String.format(PLAYERS_BY_TEAM_ID,teamId),
                         HttpMethod.GET,
@@ -103,7 +102,9 @@ public class TeamService {
 
         teamsRepository.deleteById(teamId);
 
-        return String.format(teamsRepository.existsById(teamId)  ? DELETE_MESSAGE_FAILED : DELETE_MESSAGE_SUCCESS, teamId);
+        return String.format(teamsRepository.existsById(teamId) ?
+                DELETE_MESSAGE_FAILED :
+                DELETE_MESSAGE_SUCCESS, teamId);
     }
     public String assignPlayerToTeam(PlayerDTO playerDTO) throws PlayerAssignmentException {
 
@@ -125,40 +126,44 @@ public class TeamService {
                 Objects.equals(player.getTeamId(), playerDTO.getTeamId()))
             throw new PlayerAssignmentException(PLAYER_ALREADY_ASSIGNED);
 
-        PlayerDTO updatedPlayerResponse = restTemplate
+        ResponseEntity<PlayerDTO> updatedPlayerResponse = restTemplate
                         .exchange(UPDATE_PLAYERS_TEAM,
                                 HttpMethod.PUT,
                                 new HttpEntity<>(playerDTO),
-                                PlayerDTO.class)
-                        .getBody();
+                                PlayerDTO.class);
 
-        if (updatedPlayerResponse == null)
+        //Set to variable to avoid sonar error
+        PlayerDTO body = updatedPlayerResponse.getBody();
+
+        if (body == null)
             throw new PlayerAssignmentException(EMPTY_RESPONSE_BODY);
 
-        if(!Objects.equals(updatedPlayerResponse.getTeamId(), playerDTO.getTeamId()))
-            throw new PlayerAssignmentException(PLAYER_ASSIGN_FAILED);
+        if(!Objects.equals(body.getTeamId(), playerDTO.getTeamId()))
+                throw new PlayerAssignmentException(PLAYER_ASSIGN_FAILED);
 
         return PLAYER_ASSIGN_SUCCESS;
     }
 
-    public String removePlayerToTeam(PlayerDTO playerDTO) throws PlayerAssignmentException {
+    public String removePlayerToTeam(PlayerDTO playerDTO)
+            throws PlayerAssignmentException {
 
         if (playerDTO.getPlayerId() == null)
             throw new PlayerAssignmentException(PLAYER_ID_REQUIRED);
 
         playerDTO.setTeamId(null);
 
-        PlayerDTO updatedPlayerResponse = restTemplate
+        ResponseEntity<PlayerDTO> updatedPlayerResponse = restTemplate
                 .exchange(UPDATE_PLAYERS_TEAM,
                         HttpMethod.PUT,
                         new HttpEntity<>(playerDTO),
-                        PlayerDTO.class)
-                .getBody();
+                        PlayerDTO.class);
 
-        if (updatedPlayerResponse == null)
+        PlayerDTO updatedPlayer = updatedPlayerResponse.getBody();
+
+        if (updatedPlayer == null)
             throw new PlayerAssignmentException(EMPTY_RESPONSE_BODY);
 
-        if (updatedPlayerResponse.getTeamId() != null)
+        if (updatedPlayer.getTeamId() != null)
             throw new PlayerAssignmentException(PLAYER_REMOVAL_FAILED);
 
         return PLAYER_REMOVAL_SUCCESS;

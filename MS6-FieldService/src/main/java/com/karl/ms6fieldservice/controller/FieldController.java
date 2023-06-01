@@ -1,7 +1,6 @@
 package com.karl.ms6fieldservice.controller;
 
 import com.karl.ms6fieldservice.dto.FieldDTO;
-import com.karl.ms6fieldservice.entity.Field;
 import com.karl.ms6fieldservice.exception.FieldCreateException;
 import com.karl.ms6fieldservice.exception.FieldUpdateException;
 import com.karl.ms6fieldservice.exception.ResourceNotFoundException;
@@ -34,7 +33,7 @@ public class FieldController {
                         .getAllFields()
                         .stream()
                         .map(FieldDtoConverter::toDto)
-                        .toList()
+                        .collect(Collectors.toList())
                 , HttpStatus.OK);
     }
 

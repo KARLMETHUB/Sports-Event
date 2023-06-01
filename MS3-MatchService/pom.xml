@@ -16,6 +16,16 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.coverage.exclusions>
+            src/test/java/com/karl/matches/entity/**/*,
+            src/main/java/com/karl/matches/MatchApplication.*,
+            src/main/java/com/karl/matches/clients/**/*,
+            src/main/java/com/karl/matches/config/**/*,
+            src/main/java/com/karl/matches/constants/**/*,
+            src/main/java/com/karl/matches/dto/**/*,
+            src/main/java/com/karl/matches/exception/**/*,
+            src/main/java/com/karl/matches/utils/**/*
+        </sonar.coverage.exclusions>
     </properties>
 
     <dependencies>
@@ -23,12 +33,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.mysql</groupId>-->
-<!--            <artifactId>mysql-connector-j</artifactId>-->
-<!--            <version>8.0.32</version>-->
-<!--            <scope>runtime</scope>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -39,18 +43,12 @@
             <version>2.14.2</version>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-            <!--<version>2.2.5.RELEASE</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <!--<version>2.2.5.RELEASE</version>-->
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -63,18 +61,35 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>2.0.9</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito2</artifactId>
+            <version>2.0.9</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
-            <!--Jacoco -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.8.0.2131</version>
+            </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.5</version>
                 <executions>
                     <execution>
-                        <id>default-prepare-agent</id>
+                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
@@ -87,21 +102,18 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!-- Don't include main class in the converage -->
                     <excludes>
                         <exclude>com/karl/matches/MatchApplication.class</exclude>
+                        <exclude>com/karl/matches/clients/</exclude>
+                        <exclude>com/karl/matches/config/</exclude>
+                        <exclude>com/karl/matches/constants/</exclude>
+                        <exclude>com/karl/matches/dto/</exclude>
+                        <exclude>com/karl/matches/exception/</exclude>
+                        <exclude>com/karl/matches/utils/</exclude>
                     </excludes>
                 </configuration>
             </plugin>
             <!--Jacoco -->
-
-            <!--Sonarqube-->
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.8.0.2131</version>
-            </plugin>
-            <!--Sonarqube-->
         </plugins>
     </build>
 

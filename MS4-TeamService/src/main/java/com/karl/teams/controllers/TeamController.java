@@ -41,7 +41,7 @@ public class TeamController {
                 , HttpStatus.OK);
     }
 
-    // TODO: 5/14/2023 : return Response entity
+
     @GetMapping("/{teamId}")
     public TeamDTO getTeam(@PathVariable("teamId") int teamId) throws ResourceNotFoundException {
         return toDto(teamService.getTeamById(teamId));
